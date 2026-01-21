@@ -412,7 +412,7 @@ CGO9650,Comercial Tecnipak Ltda,7/11/2016,""$80,000"",56531508-89c0-4ecf-afaf-cd
                     .Configure(c => c.UseNestedKeyFormat = false)
                     .WithField("id")
                     .WithField("name")
-                    .WithField("friends", fieldType: typeof(byte[]), valueConverter: o => o.Serialize())
+                    .WithField("friends", fieldType: typeof(string), valueConverter: o => o.DumpAsJson())
                     )
                 {
                     w.Write(r);
@@ -432,7 +432,7 @@ CGO9650,Comercial Tecnipak Ltda,7/11/2016,""$80,000"",56531508-89c0-4ecf-afaf-cd
             using (var r = new ChoParquetReader(filePath)
                 .WithField("id")
                 .WithField("name")
-                .WithField("friends", fieldType: typeof(byte[]), valueConverter: o => ((byte[])o).Deserialize<object[]>())
+                .WithField("friends", fieldType: typeof(string[]), valueConverter: o => JsonConvert.DeserializeObject<string[]>(o.ToString()))
                 .TypeConverterFormatSpec(ts => ts.EnumFormat = ChoEnumFormatSpec.Description)
                 )
             {

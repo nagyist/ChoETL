@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-#if !NETSTANDARD2_0
+#if _ALL_NET_
 using System.Windows.Data;
 #endif
 
 namespace ChoETL
 {
     [ChoTypeConverter(typeof(ChoCurrency))]
-#if !NETSTANDARD2_0
+#if _ALL_NET_
     public class ChoCurrencyConverter : IValueConverter
 #else
     public class ChoCurrencyConverter : IChoValueConverter
@@ -78,7 +78,7 @@ namespace ChoETL
     }
 
     [ChoTypeConverter(typeof(XElement))]
-#if !NETSTANDARD2_0
+#if _ALL_NET_
     public class ChoXElementConverter : IValueConverter
 #else
     public class ChoXElementConverter : IChoValueConverter

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-#if !NETSTANDARD2_0
+#if _ALL_NET_
 using System.Windows.Data;
 #endif
 
@@ -14,7 +14,7 @@ namespace ChoETL
 {
     //[ChoTypeConverter(typeof(Array))]
     [ChoNativeType(typeof(object[]))]
-#if !NETSTANDARD2_0
+#if _ALL_NET_
     public class ChoArrayToObjectConverter : IValueConverter, IChoCollectionConverter
 #else
     public class ChoArrayToObjectConverter : IChoValueConverter, IChoCollectionConverter
@@ -130,7 +130,7 @@ namespace ChoETL
     }
 
     //[ChoTypeConverter(typeof(Array))]
-#if !NETSTANDARD2_0
+#if _ALL_NET_
     public class ChoArrayToObjectsConverter : IValueConverter, IChoCollectionConverter
 #else
     public class ChoArrayToObjectsConverter : IChoValueConverter, IChoCollectionConverter

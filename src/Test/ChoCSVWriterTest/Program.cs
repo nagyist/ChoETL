@@ -4790,7 +4790,7 @@ Test,Test,https://,test,test/1810,hello,smith,test,male,1925-01-01,2024,www.3.co
                 }
             }
 
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected, actual.ToString());
         }
 
         [Test]

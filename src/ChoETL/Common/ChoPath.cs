@@ -28,14 +28,14 @@ namespace ChoETL
 
         private static void _Initialize()
         {
-#if !NETSTANDARD2_0
+#if _ALL_NET_
             if (System.Web.HttpContext.Current == null)
             {
 #endif
                 string loc = Assembly.GetEntryAssembly() != null ? Assembly.GetEntryAssembly().Location : Assembly.GetCallingAssembly().Location;
                 EntryAssemblyBaseDirectory = Path.GetDirectoryName(loc);
                 EntryAssemblyName = Path.GetFileNameWithoutExtension(loc);
-#if !NETSTANDARD2_0
+#if _ALL_NET_
             }
             else
             {

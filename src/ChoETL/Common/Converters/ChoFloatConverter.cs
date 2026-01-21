@@ -5,14 +5,14 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-#if !NETSTANDARD2_0
+#if _ALL_NET_
 using System.Windows.Data;
 #endif
 
 namespace ChoETL
 {
     [ChoTypeConverter(typeof(float))]
-#if !NETSTANDARD2_0
+#if _ALL_NET_
     public class ChoFloatConverter : IValueConverter
 #else
     public class ChoFloatConverter : IChoValueConverter

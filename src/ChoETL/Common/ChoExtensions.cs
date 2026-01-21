@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -319,7 +320,8 @@ namespace ChoETL
         //        }
         //#endif
 
-        public static string[] FastSplit(this string line, char? cSeparator = ',', char? cQuotes = '"', char? cQuoteEscape = ChoCharEx.Backslash)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static string[] FastSplit(this string line, char? cSeparator1 = ',', char? cQuotes1 = '"', char? cQuoteEscape = ChoCharEx.Backslash)
         {
             char escapeChar = cQuoteEscape == null ? ChoCharEx.Backslash : cQuoteEscape.Value;
             List<string> result = new List<string>();
@@ -327,6 +329,8 @@ namespace ChoETL
             bool inQuotes = false;
             int length = line.Length;
             bool lineEnded = false;
+            char cSeparator = cSeparator1.Value;
+            char cQuotes = cQuotes1.Value;
 
             for (int i = 0; i < line.Length; i++) // For each character
             {
@@ -399,7 +403,7 @@ namespace ChoETL
                     if (!inQuotes) // If not in quotes, end of current string, add it to result
                     {
                         var value = currentStr.ToString();
-                        if (value.Length == 1 && value[0] == cQuoteEscape)
+                        if (value.Length == 1 && value[0] == escapeChar)
                             result.Add(String.Empty);
                         else
                             result.Add(value);
@@ -418,6 +422,7 @@ namespace ChoETL
             return result.ToArray(); // Return array of all strings
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string[] Split(this string text, string value, ChoStringSplitOptions stringSplitOptions, char? quoteChar = '\0', 
             char? quoteEscape = ChoCharEx.Backslash, bool mayContainEOLInData = false)
         {
@@ -425,6 +430,7 @@ namespace ChoETL
                 (quoteEscape == null ? ChoCharEx.Backslash : quoteEscape.Value), mayContainEOLInData);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static string[] Split(this string text, object separators, ChoStringSplitOptions stringSplitOptions, 
             char quoteChar = '\0', char quoteEscape = ChoCharEx.Backslash, bool mayContainEOLInData = false)
         {

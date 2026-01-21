@@ -52,7 +52,7 @@ namespace ChoETL
                 // Try the EntryAssembly, this doesn't work for ASP.NET classic pipeline (untested on integrated)
                 Assembly assembly = Assembly.GetEntryAssembly();
 
-#if !NETSTANDARD2_0
+#if _ALL_NET_
                 // Look for web application assembly
                 HttpContext ctx = HttpContext.Current;
                 if (ctx != null)
@@ -327,7 +327,7 @@ namespace ChoETL
 
         #region Shared Members (Private)
 
-#if !NETSTANDARD2_0
+#if _ALL_NET_
 
         private static Assembly GetWebApplicationAssembly(HttpContext context)
         {

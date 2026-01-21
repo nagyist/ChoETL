@@ -260,16 +260,16 @@ namespace ChoETL
             {
                 while (true)
                 {
-                    recCount++;
                     pair = e.Peek;
                     if (pair == null)
                     {
                         if (!abortRequested)
-                            RaisedRowsLoaded(runningCount);
+                            RaisedRowsLoaded(recCount, true);
 
                         RaiseEndLoad(source);
                         yield break;
                     }
+                    recCount++;
                     runningCount = pair.Item1;
 
                     object rec = null;
@@ -387,12 +387,15 @@ namespace ChoETL
         {
             try
             {
-                if (!RaiseBeforeRecordLoad(rec, ref pair))
+                bool isHandled = false;
+                if (!RaiseBeforeRecordLoad(rec, ref pair, ref isHandled))
                 {
                     ChoETLFramework.WriteLog(TraceSwitch.TraceVerbose, "Skipping...");
                     rec = null;
                     return true;
                 }
+                if (isHandled)
+                    return true;
 
                 if (Configuration.CustomTextSelecter != null)
                 {
@@ -998,13 +1001,15 @@ namespace ChoETL
             return null;
         }
 
-        private bool RaiseBeforeRecordLoad(object target, ref Tuple<long, string> pair)
+        private bool RaiseBeforeRecordLoad(object target, ref Tuple<long, string> pair, ref bool isHandled)
         {
             if (Reader != null && Reader.HasBeforeRecordLoadSubscribed)
             {
                 long index = pair.Item1;
                 object state = pair.Item2;
-                bool retValue = ChoFuncEx.RunWithIgnoreError(() => Reader.RaiseBeforeRecordLoad(target, index, ref state), true);
+                bool isHandled1 = false;
+                bool retValue = ChoFuncEx.RunWithIgnoreError(() => Reader.RaiseBeforeRecordLoad(target, index, ref state, ref isHandled1), true);
+                isHandled = isHandled1;
 
                 if (retValue)
                     pair = new Tuple<long, string>(index, state as string);

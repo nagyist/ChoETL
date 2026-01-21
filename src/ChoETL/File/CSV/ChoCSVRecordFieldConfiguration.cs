@@ -11,6 +11,7 @@ namespace ChoETL
     [DataContract]
     public class ChoCSVRecordFieldConfiguration : ChoFileRecordFieldConfiguration
     {
+        internal bool? IsEmptyColumnHeaderField = null;
         public Func<object> Expr
         {
             get;

@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>Cinchoo</Authors>
+      <TargetFrameworks>netstandard2.0;net9.0;net8.0;net7.0;net5.0;net6.0</TargetFrameworks>
+      <Authors>Cinchoo</Authors>
     <Company>Cinchoo Inc.</Company>
     <Description>Yaml extension to Cinchoo ETL framework</Description>
     <Copyright>Copyright Cinchoo Inc.</Copyright>

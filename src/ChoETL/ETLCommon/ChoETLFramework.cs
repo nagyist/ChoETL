@@ -182,7 +182,7 @@ namespace ChoETL
             private set;
         }
 
-#if !NETSTANDARD2_0
+#if _ALL_NET_
         private static EventLog _elApplicationEventLog;
 #endif
         private readonly static Action<string> _defaultLog = (msg) =>
@@ -213,7 +213,7 @@ namespace ChoETL
             set { _iniFile = value; }
         }
 
-#if !NETSTANDARD2_0
+#if _ALL_NET_
         [DllImport("kernel32.dll", SetLastError = true)]
         internal static extern bool SetConsoleCtrlHandler(ConsoleCtrlMessageHandler consoleCtrlRoutine, bool Add);
 #endif
@@ -256,7 +256,7 @@ namespace ChoETL
                 if (GetConfigValue<bool>("TurnOnConsoleCtrlHandler", false))
                     RegisterConsoleControlHandler();
 
-#if !NETSTANDARD2_0
+#if _ALL_NET_
 
                 try
                 {
@@ -315,7 +315,7 @@ namespace ChoETL
             ObjectInitialize.Raise(null, new ChoEventArgs<object>(value));
         }
 
-#if !NETSTANDARD2_0
+#if _ALL_NET_
         public static void WriteToEventLog(string message, EventLogEntryType type)
         {
             CheckInitCalled();
@@ -388,7 +388,7 @@ namespace ChoETL
 
         private static void RegisterConsoleControlHandler()
         {
-#if !NETSTANDARD2_0
+#if _ALL_NET_
             _consoleCtrlHandler = new ConsoleCtrlMessageHandler(ConsoleCtrlHandler);
             GC.KeepAlive((object)_consoleCtrlHandler);
             SetConsoleCtrlHandler(_consoleCtrlHandler, true);

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFrameworks>netstandard2.0;net9.0;net8.0;net7.0;net5.0;net6.0</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageId>ChoETL.NETStandard</PackageId>
 		<Authors>Cinchoo</Authors>
@@ -39,6 +39,7 @@
 		<PackageReference Include="System.ComponentModel.Annotations" Version="4.4.1" />
 		<PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.1" />
 		<PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
+		<PackageReference Include="System.Memory" Version="4.5.4" />
 		<PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
 		<PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.3.0" />
 	</ItemGroup>
@@ -268,7 +269,8 @@
 		<Compile Include="..\ChoETL\File\TSV\ChoTSVReader.cs" Link="File\TSV\ChoTSVReader.cs" />
 		<Compile Include="..\ChoETL\File\CSV\ChoCSVWriter.cs" Link="File\CSV\ChoCSVWriter.cs" />
 		<Compile Include="..\ChoETL\File\CSV\ChoCSVReader.cs" Link="File\CSV\ChoCSVReader.cs" />
-		<Compile Include="..\ChoETL\File\CSV\ChoCSVLiteReader.cs" Link="File\CSV\ChoCSVLiteReader.cs" />
+        <Compile Include="..\ChoETL\File\CSV\RowBy.cs" Link="File\CSV\RowBy.cs" />
+        <Compile Include="..\ChoETL\File\CSV\ChoCSVLiteReader.cs" Link="File\CSV\ChoCSVLiteReader.cs" />
 		<Compile Include="..\ChoETL\File\CSV\ChoCSVLiteWriter.cs" Link="File\CSV\ChoCSVLiteWriter.cs" />
 		<Compile Include="..\ChoETL\File\CSV\ChoCSVRecordReader.cs" Link="File\CSV\ChoCSVRecordReader.cs" />
 		<Compile Include="..\ChoETL\File\ChoFileHeaderConfiguration.cs" Link="File\ChoFileHeaderConfiguration.cs" />

@@ -135,15 +135,16 @@ namespace ChoETL
             }
         }
 
-        public bool RaiseBeforeRecordLoad(object record, long index, ref object source)
+        public bool RaiseBeforeRecordLoad(object record, long index, ref object source, ref bool isHandled, string[] payload = null)
         {
             EventHandler<ChoBeforeRecordLoadEventArgs> eh = BeforeRecordLoad;
             if (eh == null)
                 return true;
 
-            ChoBeforeRecordLoadEventArgs e = new ChoBeforeRecordLoadEventArgs() { Record = record, Index = index, Source = source };
+            ChoBeforeRecordLoadEventArgs e = new ChoBeforeRecordLoadEventArgs() { Record = record, Index = index, Source = source, Payload = payload };
             eh(this, e);
             source = e.Source;
+            isHandled = e.Handled;
             return !e.Skip;
         }
 

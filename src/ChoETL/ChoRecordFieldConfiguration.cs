@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-#if !NETSTANDARD2_0
+#if _ALL_NET_
 using System.Windows.Data;
 #endif
 
@@ -310,7 +310,7 @@ namespace ChoETL
             return null;
         }
 
-#if !NETSTANDARD2_0
+#if _ALL_NET_
         public void AddConverter(IValueConverter converter)
         {
             if (converter == null) return;
@@ -336,7 +336,7 @@ namespace ChoETL
                 Converters.Remove(converter);
         }
 
-#if !NETSTANDARD2_0
+#if _ALL_NET_
         public void RemoveConverter(IValueConverter converter)
         {
             if (converter == null) return;
@@ -351,7 +351,7 @@ namespace ChoETL
                 Converters.Remove(converter);
         }
 
-#if !NETSTANDARD2_0
+#if _ALL_NET_
         public void AddItemConverter(IValueConverter converter)
         {
             if (converter == null) return;
@@ -377,7 +377,7 @@ namespace ChoETL
                 ItemConverters.Remove(converter);
         }
 
-#if !NETSTANDARD2_0
+#if _ALL_NET_
         public void RemoveItemConverter(IValueConverter converter)
         {
             if (converter == null) return;
@@ -392,7 +392,7 @@ namespace ChoETL
                 ItemConverters.Remove(converter);
         }
 
-#if !NETSTANDARD2_0
+#if _ALL_NET_
         public void AddKeyConverter(IValueConverter converter)
         {
             if (converter == null) return;
@@ -418,7 +418,7 @@ namespace ChoETL
                 KeyConverters.Remove(converter);
         }
 
-#if !NETSTANDARD2_0
+#if _ALL_NET_
         public void RemoveKeyConverter(IValueConverter converter)
         {
             if (converter == null) return;
@@ -433,7 +433,7 @@ namespace ChoETL
                 KeyConverters.Remove(converter);
         }
 
-#if !NETSTANDARD2_0
+#if _ALL_NET_
         public void AddValueConverter(IValueConverter converter)
         {
             if (converter == null) return;
@@ -459,7 +459,7 @@ namespace ChoETL
                 ValueConverters.Remove(converter);
         }
 
-#if !NETSTANDARD2_0
+#if _ALL_NET_
         public void RemoveValueConverter(IValueConverter converter)
         {
             if (converter == null) return;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -69,6 +70,39 @@ namespace ChoETL
         {
             return (T)CreateInstance(typeof(T));
         }
+        public static ObjectActivator CreateCtor(Type type)
+        {
+            if (type == null)
+            {
+                throw new NullReferenceException("type");
+            }
+            ConstructorInfo emptyConstructor = type.GetConstructor(Type.EmptyTypes);
+            var dynamicMethod = new DynamicMethod("CreateInstance", type, Type.EmptyTypes, true);
+            ILGenerator ilGenerator = dynamicMethod.GetILGenerator();
+            ilGenerator.Emit(OpCodes.Nop);
+            ilGenerator.Emit(OpCodes.Newobj, emptyConstructor);
+            ilGenerator.Emit(OpCodes.Ret);
+            return (ObjectActivator)dynamicMethod.CreateDelegate(typeof(ObjectActivator));
+        }
+
+        public delegate object ObjectActivator();
+        private static readonly Dictionary<Type, ObjectActivator> _createInstanceDict = new Dictionary<Type, ObjectActivator>();
+
+        public static object CreateInstanceInternal(Type objType)
+        {
+            if (_createInstanceDict.ContainsKey(objType))
+                return _createInstanceDict[objType]();
+
+            lock (_createInstanceDict)
+            {
+                if (_createInstanceDict.ContainsKey(objType))
+                    return _createInstanceDict[objType]();
+
+                ObjectActivator activator = CreateCtor(objType);
+                _createInstanceDict.Add(objType, activator);
+                return activator();
+            }
+        }
 
         public static object CreateInstance(Type objType, params object[] args)
         {
@@ -105,7 +139,7 @@ namespace ChoETL
                         if (args.IsNullOrEmpty())
                         {
                             if (ChoType.HasDefaultConstructor(objType))
-                                obj = Activator.CreateInstance(objType);
+                                obj = CreateInstanceInternal(objType); // Activator.CreateInstance(objType);
                         }
                         else
                             obj = Activator.CreateInstance(objType, args);

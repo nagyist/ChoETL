@@ -28,11 +28,11 @@ namespace ChoETL
             {
                 if (ChoETLFrxBootstrap.Configuration == null)
                 {
-#if !NETSTANDARD2_0
+#if _ALL_NET_
                     if (HttpContext.Current == null)
 #endif
                         Configuration = ConfigurationManager.OpenExeConfiguration(null);
-#if !NETSTANDARD2_0
+#if _ALL_NET_
                     else
                         Configuration = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("~/");
 #endif

@@ -295,11 +295,27 @@
         #endregion Other Members
 
         #region HasConstructor Overloads
-
-        public static bool HasDefaultConstructor(Type type)
+        public static bool HasDefaultConstructor2(Type type)
         {
             ConstructorInfo constructorInfo = type.GetConstructor(new Type[] { });
             return constructorInfo != null;
+        }
+
+        private static readonly Dictionary<Type, bool> _hasDefaultConstructorCache = new Dictionary<Type, bool>();
+        public static bool HasDefaultConstructor(Type type)
+        {
+            if (_hasDefaultConstructorCache.ContainsKey(type))
+                return _hasDefaultConstructorCache[type];
+
+            lock (_hasDefaultConstructorCache)
+            {
+                if (_hasDefaultConstructorCache.ContainsKey(type))
+                    return _hasDefaultConstructorCache[type];
+
+                ConstructorInfo constructorInfo = type.GetConstructor(new Type[] { });
+                _hasDefaultConstructorCache.Add(type, constructorInfo != null);
+                return constructorInfo != null;
+            }
         }
 
         public static bool HasConstructor(Type type, object[] parameters)

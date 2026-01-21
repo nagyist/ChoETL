@@ -40,7 +40,7 @@ namespace ChoETL
         public Type CreateDynamicType<T>(string name, Dictionary<string, Type> properties, string[] keys = null)
         {
             var tb = CreateDynamicTypeBuilder<T>(name, properties, keys);
-#if !NETSTANDARD2_0
+#if _ALL_NET_
             return tb.CreateType();
 #else
             return tb.CreateTypeInfo();
@@ -58,7 +58,7 @@ namespace ChoETL
         {
             if (_assemblyBuilder == null)
             {
-#if !NETSTANDARD2_0
+#if _ALL_NET_
                 _assemblyBuilder = _appDomain.DefineDynamicAssembly(new AssemblyName(_assemblyName),
                     AssemblyBuilderAccess.RunAndSave);
 #else
@@ -197,7 +197,7 @@ namespace ChoETL
             return setMethodBuilder;
         }
 
-#if !NETSTANDARD2_0
+#if _ALL_NET_
         public void SaveAssembly()
         {
             _assemblyBuilder.Save(_assemblyBuilder.GetName().Name + ".dll");

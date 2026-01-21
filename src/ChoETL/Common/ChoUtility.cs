@@ -1388,7 +1388,7 @@ namespace ChoETL
         public static byte[] Serialize(this object target)
         {
             ChoGuard.ArgumentNotNull(target, "Target");
-
+#if _ALL_NET_
             using (MemoryStream f = new MemoryStream())
             {
                 if (target != null)
@@ -1396,6 +1396,9 @@ namespace ChoETL
 
                 return f.ToArray();
             }
+#else
+            throw new NotSupportedException("");
+#endif
         }
 
         public static T Deserialize<T>(this byte[] buffer)
@@ -1406,11 +1409,14 @@ namespace ChoETL
         public static object Deserialize(this byte[] buffer)
         {
             ChoGuard.ArgumentNotNull(buffer, "buffer");
-
+#if _ALL_NET_
             using (MemoryStream f = new MemoryStream(buffer))
             {
                 return new BinaryFormatter().Deserialize(f);
             }
+#else
+            throw new NotSupportedException("");
+#endif
         }
         #region XmlSerialize Overloads
 

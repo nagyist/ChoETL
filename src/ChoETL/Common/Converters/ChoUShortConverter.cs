@@ -5,14 +5,14 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-#if !NETSTANDARD2_0
+#if _ALL_NET_
 using System.Windows.Data;
 #endif
 
 namespace ChoETL
 {
     [ChoTypeConverter(typeof(ushort))]
-#if !NETSTANDARD2_0
+#if _ALL_NET_
     public class ChoUShortConverter : IValueConverter
 #else
     public class ChoUShortConverter : IChoValueConverter

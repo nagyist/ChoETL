@@ -109,6 +109,12 @@ namespace ChoETL
             get;
             set;
         }
+        public object Payload
+        {
+            get;
+            set;
+        }
+        public bool Handled { get; set; }
     }
 
     public class ChoBeforeRecordFieldLoadEventArgs : ChoBeforeRecordLoadEventArgs

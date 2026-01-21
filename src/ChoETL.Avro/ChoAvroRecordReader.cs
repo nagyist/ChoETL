@@ -305,12 +305,16 @@ namespace ChoETL
 
             try
             {
-                if (!RaiseBeforeRecordLoad(rec, ref pair))
+                bool isHandled = false;
+                if (!RaiseBeforeRecordLoad(rec, ref pair, ref isHandled))
                 {
                     ChoETLFramework.WriteLog(TraceSwitch.TraceVerbose, "Skipping...");
                     rec = null;
                     return true;
                 }
+                if (isHandled)
+                    return true;
+
                 //if (Configuration.CustomNodeSelecter != null)
                 //{
                 //    pair = new Tuple<long, object>(pair.Item1, Configuration.CustomNodeSelecter(pair.Item2));
@@ -466,13 +470,15 @@ namespace ChoETL
             return null;
         }
 
-        private bool RaiseBeforeRecordLoad(object target, ref Tuple<long, object> pair)
+        private bool RaiseBeforeRecordLoad(object target, ref Tuple<long, object> pair, ref bool isHandled)
         {
             if (Reader != null && Reader.HasBeforeRecordLoadSubscribed)
             {
                 long index = pair.Item1;
                 object state = pair.Item2;
-                bool retValue = ChoFuncEx.RunWithIgnoreError(() => Reader.RaiseBeforeRecordLoad(target, index, ref state), true);
+                bool isHandled1 = false;
+                bool retValue = ChoFuncEx.RunWithIgnoreError(() => Reader.RaiseBeforeRecordLoad(target, index, ref state, ref isHandled1), true);
+                isHandled = isHandled1;
 
                 if (retValue)
                     pair = new Tuple<long, object>(index, state as IDictionary<string, object>);

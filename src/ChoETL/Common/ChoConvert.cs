@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-#if !NETSTANDARD2_0
+#if _ALL_NET_
 using System.Windows.Data;
 #endif
 
@@ -217,7 +217,7 @@ namespace ChoETL
                                     if (typeConverter.CanConvertFrom(type))
                                         lVal = typeConverter.ConvertFrom((ITypeDescriptorContext)null, culture, item);
                                 }
-#if !NETSTANDARD2_0
+#if _ALL_NET_
                                 else if (conv is IValueConverter)
                                     lVal = ((IValueConverter)conv).Convert(item, elementType, (object)objArray, culture);
 #endif
@@ -237,7 +237,7 @@ namespace ChoETL
                                 if (typeConverter.CanConvertFrom(type))
                                     value = typeConverter.ConvertFrom((ITypeDescriptorContext)null, culture, value);
                             }
-#if !NETSTANDARD2_0
+#if _ALL_NET_
                             else if (conv is IValueConverter)
                                 value = ((IValueConverter)conv).Convert(value, targetType, (object)objArray, culture);
 #endif
@@ -531,7 +531,7 @@ namespace ChoETL
                                     if (typeConverter.CanConvertFrom(type))
                                         lVal = typeConverter.ConvertTo((ITypeDescriptorContext)null, culture, item, targetType.GetItemType());
                                 }
-#if !NETSTANDARD2_0
+#if _ALL_NET_
                                 else if (conv is IValueConverter)
                                     lVal = ((IValueConverter)conv).ConvertBack(item, targetType, (object)objArray, culture);
 #endif
@@ -551,7 +551,7 @@ namespace ChoETL
                                 if (typeConverter.CanConvertFrom(type))
                                     value = typeConverter.ConvertTo((ITypeDescriptorContext)null, culture, value, targetType);
                             }
-#if !NETSTANDARD2_0
+#if _ALL_NET_
                             else if (conv is IValueConverter)
                                 value = ((IValueConverter)conv).ConvertBack(value, targetType, (object)objArray, culture);
 #endif
@@ -737,7 +737,7 @@ namespace ChoETL
                 if (typeConverter.CanConvertFrom(type))
                     value = typeConverter.ConvertFrom((ITypeDescriptorContext)null, culture, value);
             }
-#if !NETSTANDARD2_0
+#if _ALL_NET_
             else if (serializer is IValueConverter)
                 value = ((IValueConverter)serializer).Convert(value, targetType, (object)serializerParams, culture);
 #endif
@@ -755,7 +755,7 @@ namespace ChoETL
                 if (typeConverter.CanConvertTo(targetType))
                     value = typeConverter.ConvertTo((ITypeDescriptorContext)null, culture, value, targetType);
             }
-#if !NETSTANDARD2_0
+#if _ALL_NET_
             else if (serializer is IValueConverter)
                 value = ((IValueConverter)serializer).ConvertBack(value, targetType, (object)serializerParams, culture);
 #endif

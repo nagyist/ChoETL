@@ -137,7 +137,7 @@ namespace ChoETL
             return this;
         }
 
-#if !NETSTANDARD2_0
+#if _ALL_NET_
         public ChoFixedLengthRecordFieldConfigurationMap PropertyConverter(System.Windows.Data.IValueConverter converter)
         {
             if (_config.PropConvertersInternal.IsNullOrEmpty())

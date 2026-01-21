@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-#if !NETSTANDARD2_0
+#if _ALL_NET_
 using System.Windows.Data;
 #endif
 
@@ -215,7 +215,7 @@ namespace ChoETL
                     ChoTypeConverter.Global.Add(recordType, c as IChoValueConverter);
                 else if (c is TypeConverter)
                     ChoTypeConverter.Global.Add(recordType, c as TypeConverter);
-#if !NETSTANDARD2_0
+#if _ALL_NET_
                 else if (c is IValueConverter)
                     ChoTypeConverter.Global.Add(recordType, c as IValueConverter);
 #endif
@@ -505,7 +505,7 @@ namespace ChoETL
 
         public void RegisterTypeConverter(Type type)
         {
-#if !NETSTANDARD2_0
+#if _ALL_NET_
             if (typeof(IValueConverter).IsAssignableFrom(type))
             {
                 var attr = ChoType.GetCustomAttribute<ChoSourceTypeAttribute>(type, true);
@@ -527,7 +527,7 @@ namespace ChoETL
             RegisterTypeConverter(typeof(T));
         }
 
-#if !NETSTANDARD2_0
+#if _ALL_NET_
 
         public void RegisterTypeConverterForType<T>(IValueConverter converter)
         {
@@ -538,7 +538,7 @@ namespace ChoETL
         {
             RegisterTypeConverterForTypeInternal(typeof(T), (object)converter);
         }
-#if !NETSTANDARD2_0
+#if _ALL_NET_
 
         public void RegisterTypeConverterForType(Type objType, IValueConverter converter)
         {

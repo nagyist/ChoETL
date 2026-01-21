@@ -7,7 +7,7 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Reflection;
-#if !NETSTANDARD2_0
+#if _ALL_NET_
     using System.Windows.Data;
 #endif
 
@@ -692,7 +692,7 @@
             object[] netConvs = new object[] { };
 
             choConvs = converters.OfType<IChoValueConverter>().ToArray();
-#if !NETSTANDARD2_0
+#if _ALL_NET_
             netConvs = converters.OfType<IValueConverter>().ToArray();
 #endif
             converters = ChoArray.Combine<object>(choConvs, netConvs);
@@ -708,7 +708,7 @@
 
         public static void RegisterTypeConverter(Type type)
         {
-#if !NETSTANDARD2_0
+#if _ALL_NET_
             if (typeof(IValueConverter).IsAssignableFrom(type))
             {
                 var attr = ChoType.GetCustomAttribute<ChoSourceTypeAttribute>(type, true);
@@ -730,7 +730,7 @@
             RegisterTypeConverter(typeof(T));
         }
 
-#if !NETSTANDARD2_0
+#if _ALL_NET_
         public static void RegisterTypeConverterForType<T>(IValueConverter converter)
         {
             RegisterTypeConverterForTypeInternal(typeof(T), (object)converter);
@@ -741,7 +741,7 @@
         {
             RegisterTypeConverterForTypeInternal(typeof(T), (object)converter);
         }
-#if !NETSTANDARD2_0
+#if _ALL_NET_
 
         public static void RegisterTypeConverterForType(Type objType, IValueConverter converter)
         {
