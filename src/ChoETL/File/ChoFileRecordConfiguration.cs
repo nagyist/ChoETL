@@ -513,7 +513,7 @@ namespace ChoETL
             }
         }
 
-        protected Encoding GetEncoding(Stream inStream)
+        public Encoding GetEncoding(Stream inStream)
         {
             if (_encoding == null)
             {
@@ -546,7 +546,7 @@ namespace ChoETL
             return GetEncoding(inStream);
         }
 
-        protected Encoding GetEncoding(string fileName)
+        public Encoding GetEncoding(string fileName)
         {
             if (_encoding == null)
             {

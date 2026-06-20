@@ -138,15 +138,6 @@ namespace ChoETL
                     object[] fcParams = null;
                     object[] convs = null;
                     Type fieldType = fieldConfig.PDInternal != null ? fieldConfig.PDInternal.PropertyType : null;
-                    if (convs.IsNullOrEmpty() && config != null)
-                    {
-                        var convs1 = config.GetConvertersForType(fieldType, fieldValue);
-                        if (!convs1.IsNullOrEmpty())
-                        {
-                            convs = convs1;
-                            fcParams = GetPropertyConvertersParams(config.GetConverterParamsForType(fieldType, fieldValue), fieldConfig.FormatText);
-                        }
-                    }
                     if (convs.IsNullOrEmpty())
                     {
                         object[] convs1 = fieldConfig.PropConvertersInternal;
@@ -158,6 +149,16 @@ namespace ChoETL
                     }
                     else
                         fcParams = GetPropertyConvertersParams(fieldConfig);
+
+                    if (convs.IsNullOrEmpty() && config != null)
+                    {
+                        var convs1 = config.GetConvertersForType(fieldType, fieldValue);
+                        if (!convs1.IsNullOrEmpty())
+                        {
+                            convs = convs1;
+                            fcParams = GetPropertyConvertersParams(config.GetConverterParamsForType(fieldType, fieldValue), fieldConfig.FormatText);
+                        }
+                    }
 
                     if (!convs.IsNullOrEmpty())
                     {

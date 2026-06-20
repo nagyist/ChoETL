@@ -18,7 +18,13 @@ using System.Threading;
 using System.Security;
 using Microsoft.VisualBasic.FileIO;
 using Newtonsoft.Json;
+#if NET8_0_OR_GREATER
+using Microsoft.Data.SqlClient;
+#elif _ALL_NET_
+using Microsoft.Data.SqlClient;
+#else
 using System.Data.SqlClient;
+#endif
 using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
 using RangeAttribute = System.ComponentModel.DataAnnotations.RangeAttribute;
 using UnitTestHelper;
